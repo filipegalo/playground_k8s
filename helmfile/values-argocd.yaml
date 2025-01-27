@@ -7,3 +7,24 @@ server:
     ingressClassName: nginx
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+repoServer:
+  rbac:
+    - apiGroups:
+        - ""
+      resources:
+        - pods/exec
+      verbs:
+        - create
+
+configs:
+  cm:
+    exec:
+      enabled: true
+  repositories:
+    server:
+      url: https://github.com/filipegalo/playground_k8s.git
+      type: git
+      insecure: "true"
+      project: internal
+      name: playground_k8s

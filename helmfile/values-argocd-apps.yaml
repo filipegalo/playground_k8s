@@ -1,0 +1,19 @@
+applications:
+  nginx:
+    namespace: argocd
+    finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    project: playground-k8s
+    destination:
+      namespace: nginx
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: https://github.com/filipegalo/playground_k8s.git
+      targetRevision: HEAD
+      path: charts/nginx
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
