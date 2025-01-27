@@ -32,13 +32,11 @@ spec:
               echo "<h1>Pod IP: $POD_IP</h1>" > /usr/share/nginx/html/index.html &&
               nginx -g 'daemon off;'
           resources:
-            {{- if .Values.resources.requests }}
+            {{- if .Values.resources }}
             requests:
-              {{- toYaml .Values.resources.requests | nindent 12 }}
-            {{- end }}
-            {{- if .Values.resources.limits }}
+              {{- toYaml .Values.resources.requests | nindent 14 }}
             limits:
-              {{- toYaml .Values.resources.limits | nindent 12 }}
+              {{- toYaml .Values.resources.limits | nindent 14 }}
             {{- end }}
       nodeSelector: {{ .Values.nodeSelector | toYaml | nindent 8 }}
       tolerations: {{ .Values.tolerations | toYaml | nindent 8 }}
