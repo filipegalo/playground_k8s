@@ -1,0 +1,15 @@
+serviceAccounts:
+  - name: admin-user
+    namespace: k8s-dashboard
+    clusterRole: cluster-admin
+    subjects:
+      - kind: ServiceAccount
+        name: admin-user
+        namespace: k8s-dashboard
+
+secrets:
+  - name: admin-user
+    namespace: k8s-dashboard
+    annotations:
+      kubernetes.io/service-account.name: "admin-user"
+    type: kubernetes.io/service-account-token

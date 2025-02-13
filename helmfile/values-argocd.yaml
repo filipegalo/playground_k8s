@@ -26,5 +26,11 @@ configs:
       url: https://github.com/filipegalo/playground_k8s.git
       type: git
       insecure: "true"
-      project: internal
+      project: playground-k8s
       name: playground_k8s
+    kubernetes-dashboard:
+      url: https://kubernetes.github.io/dashboard/
+      type: helm
+      insecure: "true"
+      project: playground-k8s
+      name: kubernetes-dashboard

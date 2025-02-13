@@ -1,0 +1,7 @@
+Thank you for installing {{ .Chart.Name }}.
+
+To get the authentication token for the Kubernetes Dashboard, run the following commands:
+
+  kubectl get secret admin-user -n k8s-dashboard -o jsonpath={".data.token"} | base64 -d; echo
+
+This will display your authentication token that you can use to log into the Kubernetes Dashboard. 

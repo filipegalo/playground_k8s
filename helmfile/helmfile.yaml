@@ -17,3 +17,7 @@ releases:
     namespace: argocd
     values:
       - values-argocd-apps.yaml
+
+  - name: custom-resources
+    chart: ./charts/custom-resources
+    version: 0.1.0
