@@ -32,6 +32,9 @@ applications:
       helm:
         values: |
           app:
+            scheduling:
+              nodeSelector:
+                node-role.kubernetes.io/apps: ""
             ingress:
               enabled: true
               hosts:
