@@ -30,19 +30,17 @@ resources:
 nodeSelector: {}
 affinity:
   podAntiAffinity:
-    requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-            - key: app
-              operator: In
-              values:
-                - nginx
-        topologyKey: "kubernetes.io/hostname"
-
-tolerations:
-  - key: "node-role.kubernetes.io/worker"
-    operator: "Exists"
-    effect: "NoSchedule"
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - nginx
+          topologyKey: "kubernetes.io/hostname"
+tolerations: {}
 
 hpa:
   enabled: true
