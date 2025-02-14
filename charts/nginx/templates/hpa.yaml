@@ -12,6 +12,18 @@ spec:
     name: {{ .Release.Name }}
   minReplicas: {{ .Values.hpa.minReplicas }}
   maxReplicas: {{ .Values.hpa.maxReplicas }}
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: {{ .Values.hpa.scaleDown.stabilizationWindowSeconds }}
+      policies:
+        - type: Percent
+          value: {{ .Values.hpa.scaleDown.maxPercent }}
+          periodSeconds: {{ .Values.hpa.scaleDown.periodSeconds }}
+    scaleUp:
+      policies:
+        - type: Percent
+          value: {{ .Values.hpa.scaleUp.maxPercent }}
+          periodSeconds: {{ .Values.hpa.scaleUp.periodSeconds }}
   metrics:
     - type: Resource
       resource:

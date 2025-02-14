@@ -48,3 +48,12 @@ hpa:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 70
   targetMemoryUtilizationPercentage: null
+
+  scaleDown:
+    stabilizationWindowSeconds: 300
+    maxPercent: 50
+    periodSeconds: 60
+
+  scaleUp:
+    maxPercent: 100
+    periodSeconds: 30
