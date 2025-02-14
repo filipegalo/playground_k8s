@@ -40,7 +40,7 @@ affinity:
                 values:
                   - nginx
           topologyKey: "kubernetes.io/hostname"
-tolerations: {}
+tolerations: []
 
 hpa:
   enabled: true
