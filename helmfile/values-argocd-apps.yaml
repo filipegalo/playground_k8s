@@ -34,7 +34,7 @@ applications:
           app:
             scheduling:
               nodeSelector:
-                node-role.kubernetes.io/apps: ""
+                node-role.kubernetes.io/apps: "true"
             ingress:
               enabled: true
               hosts:

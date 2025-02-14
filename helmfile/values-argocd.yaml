@@ -1,5 +1,7 @@
 global:
   domain: argocd.minikube.local
+  nodeSelector:
+    kubernetes.io/hostname: minikube
 
 server:
   ingress:

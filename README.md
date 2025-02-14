@@ -17,13 +17,14 @@ Before you start, make sure you have the following installed on your machine:
 ## Getting Started
 
 1. Clone this repository.
-2. Run `minikube start` to start the Kubernetes cluster.
+2. Run `minikube start --cni=calico` to start the Kubernetes cluster.
 3. Run `kubectl get nodes` to check if the cluster is running.
 
 ## Helmfile
 
 1. Install Helmfile: `brew install helmfile`
 2. Run `./setup.sh` to install the necessary plugins and enable the ingress addon.
+   - The script includes `minikube node add` because starting Minikube with the `--nodes=2` option causes DNS resolution issues.
 3. Go to the `helmfile` directory.
 4. Run `helmfile apply` to install the applications.
 

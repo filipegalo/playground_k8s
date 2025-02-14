@@ -4,7 +4,7 @@ repositories:
 ---
 releases:
   - name: argocd
-    chart: argo/argo-cd
+    chart: argocd/argo-cd
     version: 7.7.17
     namespace: argocd
     createNamespace: true
@@ -12,11 +12,13 @@ releases:
       - values-argocd.yaml
 
   - name: argocd-apps
-    chart: argo/argocd-apps
+    chart: argocd/argocd-apps
     version: 2.0.2
     namespace: argocd
     values:
       - values-argocd-apps.yaml
+    needs:
+      - argocd
 
   - name: custom-resources
     chart: ./charts/custom-resources

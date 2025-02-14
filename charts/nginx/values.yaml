@@ -27,7 +27,7 @@ resources:
     cpu: 200m
     memory: 256Mi
 nodeSelector:
-  node-role.kubernetes.io/apps: ""
+  node-role.kubernetes.io/apps: "true"
 tolerations: []
 affinity: {}
 
