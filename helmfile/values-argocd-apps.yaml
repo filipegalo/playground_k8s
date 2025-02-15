@@ -59,3 +59,21 @@ applications:
         selfHeal: true
       syncOptions:
         - CreateNamespace=true
+  url-shortener:
+    namespace: argocd
+    finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    project: playground-k8s
+    destination:
+      namespace: url-shortener
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: https://github.com/filipegalo/playground_k8s.git
+      targetRevision: HEAD
+      path: charts/url-shortener
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true

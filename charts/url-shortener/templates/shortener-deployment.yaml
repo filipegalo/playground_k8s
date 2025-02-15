@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-shortener
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: shortener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "url-shortener.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: shortener
+  template:
+    metadata:
+      labels:
+        {{- include "url-shortener.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: shortener
+    spec:
+      containers:
+        - name: shortener
+          image: "{{ .Values.shortenerService.image.repository }}:{{ .Values.shortenerService.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.shortenerService.image.pullPolicy }}
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          env:
+            - name: REDIS_HOST
+              value: {{ include "url-shortener.fullname" . }}-redis
+            - name: REDIS_PORT
+              value: "{{ .Values.redis.service.port }}"
+          resources:
+            {{- toYaml .Values.shortenerService.resources | nindent 12 }}

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-redirect
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redirect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "url-shortener.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: redirect
+  template:
+    metadata:
+      labels:
+        {{- include "url-shortener.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: redirect
+    spec:
+      containers:
+        - name: redirect
+          image: "{{ .Values.redirectService.image.repository }}:{{ .Values.redirectService.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.redirectService.image.pullPolicy }}
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8001
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          env:
+            - name: REDIS_HOST
+              value: {{ include "url-shortener.fullname" . }}-redis
+            - name: REDIS_PORT
+              value: "{{ .Values.redis.service.port }}"
+          resources:
+            {{- toYaml .Values.redirectService.resources | nindent 12 }} 

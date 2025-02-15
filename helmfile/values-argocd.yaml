@@ -23,6 +23,7 @@ configs:
   cm:
     exec:
       enabled: true
+    timeout.reconciliation: 1s
   repositories:
     server:
       url: https://github.com/filipegalo/playground_k8s.git

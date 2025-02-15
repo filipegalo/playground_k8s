@@ -23,3 +23,6 @@ releases:
   - name: custom-resources
     chart: ./charts/custom-resources
     version: 0.1.0
+    namespace: default
+    needs:
+      - argocd/argocd-apps

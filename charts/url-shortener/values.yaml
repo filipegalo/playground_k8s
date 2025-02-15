@@ -1,0 +1,69 @@
+nameOverride: ""
+fullnameOverride: ""
+
+frontend:
+  image:
+    repository: ghcr.io/filipegalo/dummy_projects/url-shortener/frontend
+    tag: ""
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 3000
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+shortenerService:
+  image:
+    repository: ghcr.io/filipegalo/dummy_projects/url-shortener/shortener-svc
+    tag: ""
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8000
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+redirectService:
+  image:
+    repository: ghcr.io/filipegalo/dummy_projects/url-shortener/redirect-svc
+    tag: ""
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 8001
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+redis:
+  enabled: true
+  service:
+    port: 6379
+  persistence:
+    enabled: true
+    size: 1Gi
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: shortener.minikube.local
+      paths:
+        - path: /
+          pathType: Prefix
+          service: frontend
+    - host: shortener-api.minikube.local
+      paths:
+        - path: /redirect
+          pathType: Prefix
+          service: redirect
+        - path: /shorten
+          pathType: Prefix
+          service: shortener
+  tls: []

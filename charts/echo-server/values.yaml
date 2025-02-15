@@ -33,10 +33,10 @@ affinity:
         podAffinityTerm:
           labelSelector:
             matchExpressions:
-              - key: app
+              - key: app.kubernetes.io/name
                 operator: In
                 values:
-                  - nginx
+                  - echo-server
           topologyKey: "kubernetes.io/hostname"
 tolerations: []
 

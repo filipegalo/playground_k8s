@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-frontend
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: frontend
+spec:
+  type: {{ .Values.frontend.service.type }}
+  ports:
+    - port: {{ .Values.frontend.service.port }}
+      targetPort: 3000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "url-shortener.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-shortener
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: shortener
+spec:
+  type: {{ .Values.shortenerService.service.type }}
+  ports:
+    - port: {{ .Values.shortenerService.service.port }}
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "url-shortener.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: shortener
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-redirect
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redirect
+spec:
+  type: {{ .Values.redirectService.service.type }}
+  ports:
+    - port: {{ .Values.redirectService.service.port }}
+      targetPort: 8001
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "url-shortener.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: redirect
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "url-shortener.fullname" . }}-redis
+  labels:
+    {{- include "url-shortener.labels" . | nindent 4 }}
+    app.kubernetes.io/component: redis
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.redis.service.port }}
+      targetPort: 6379
+      protocol: TCP
+      name: redis
+  selector:
+    {{- include "url-shortener.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: redis 

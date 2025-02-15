@@ -13,3 +13,20 @@ secrets:
     annotations:
       kubernetes.io/service-account.name: "admin-user"
     type: kubernetes.io/service-account-token
+
+argocd_projects:
+  - name: "playground-k8s"
+    namespace: argocd
+    description: Playground K8s
+    clusterResourceWhitelist:
+      - group: "*"
+        kind: "*"
+    namespaceResourceWhitelist:
+      - group: "*"
+        kind: "*"
+    sourceRepos:
+      - https://github.com/filipegalo/playground_k8s.git
+    destinations:
+      - name: in-cluster
+        namespace: "*"
+        server: https://kubernetes.default.svc
