@@ -1,6 +1,6 @@
 image:
-  repository: nginx
-  tag: "1.21"
+  repository: ghcr.io/filipegalo/echo-server/echo-server
+  tag: ""
   pullPolicy: IfNotPresent
 
 service:
@@ -11,7 +11,7 @@ ingress:
   enabled: true
   annotations: {}
   hosts:
-    - host: nginx.minikube.local
+    - host: hello.minikube.local
       paths:
         - path: /
           pathType: Prefix

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ default .Chart.AppVersion .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 80
@@ -28,12 +28,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-          command:
-            - /bin/sh
-            - -c
-            - >
-              echo "<h1>Pod IP: $POD_IP</h1><h2>Node: $NODE_NAME</h2>" > /usr/share/nginx/html/index.html &&
-              nginx -g 'daemon off;'
           resources:
             {{- if .Values.resources }}
             requests:
