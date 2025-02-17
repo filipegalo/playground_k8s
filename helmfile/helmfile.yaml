@@ -1,6 +1,8 @@
 repositories:
   - name: argocd
     url: https://argoproj.github.io/argo-helm
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
 ---
 releases:
   - name: argocd
@@ -26,3 +28,13 @@ releases:
     namespace: default
     needs:
       - argocd/argocd-apps
+
+  - name: monitoring
+    chart: prometheus-community/kube-prometheus-stack
+    version: 69.3.0
+    namespace: monitoring
+    createNamespace: true
+    values:
+      - monitoring/values-monitoring.yaml
+      - monitoring/values-prometheus.yaml
+      - monitoring/values-alertmanager.yaml
