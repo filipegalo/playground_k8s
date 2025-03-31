@@ -1,0 +1,37 @@
+controller:
+  JCasC:
+    configScripts:
+      jobs: |
+        jobs:
+        - script: >
+            pipelineJob('playground-k8s-pipeline') {
+              definition {
+                cpsScm {
+                  scm {
+                    git {
+                      remote {
+                        url('https://github.com/filipegalo/playground_k8s.git')
+                      }
+                      branches('*/main')
+                    }
+                  }
+                  scriptPath('jenkins/pipelines/HelloWorld.Jenkinsfile')
+                }
+              }
+            }
+        - script: >
+            pipelineJob('playground-k8s-helmfile-pipeline') {
+              definition {
+                cpsScm {
+                  scm {
+                    git {
+                      remote {
+                        url('https://github.com/filipegalo/playground_k8s.git')
+                      }
+                      branches('*/main')
+                    }
+                  }
+                  scriptPath('jenkins/pipelines/Helmfile.Jenkinsfile')
+                }
+              }
+            }

@@ -3,6 +3,8 @@ repositories:
     url: https://argoproj.github.io/argo-helm
   - name: prometheus-community
     url: https://prometheus-community.github.io/helm-charts
+  - name: jenkinsci
+    url: https://charts.jenkins.io/
 ---
 releases:
   - name: argocd
@@ -38,3 +40,13 @@ releases:
       - monitoring/values-monitoring.yaml
       - monitoring/values-prometheus.yaml
       - monitoring/values-alertmanager.yaml
+
+  - name: jenkins
+    chart: jenkinsci/jenkins
+    version: 5.8.29
+    namespace: jenkins
+    createNamespace: true
+    values:
+      - cicd/jenkins/values.yaml
+      - cicd/jenkins/values-global.yaml
+      - cicd/jenkins/values-pipelines.yaml
