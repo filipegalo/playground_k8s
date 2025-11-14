@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-default-admin
+subjects:
+  - kind: ServiceAccount
+    name: default # The SA you want to grant permissions to
+    namespace: jenkins # Namespace where the SA exists
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin # Built-in role for full admin access
+  apiGroup: rbac.authorization.k8s.io

@@ -4,7 +4,11 @@ controller:
       jobs: |
         jobs:
         - script: >
-            pipelineJob('playground-k8s-pipeline') {
+            folder('Kubernetes') {
+              description('This is a folder for all the Kubernetes pipelines')
+            }
+        - script: >
+            pipelineJob('HelloWorld') {
               definition {
                 cpsScm {
                   scm {
@@ -20,7 +24,7 @@ controller:
               }
             }
         - script: >
-            pipelineJob('playground-k8s-helmfile-pipeline') {
+            pipelineJob('Kubernetes/HelmfileApply') {
               definition {
                 cpsScm {
                   scm {
